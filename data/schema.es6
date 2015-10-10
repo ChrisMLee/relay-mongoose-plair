@@ -23,28 +23,27 @@ import {
   nodeDefinitions,
 } from 'graphql-relay';
 
-
-let Node = new GraphQLInterfaceType({
-  name: 'Node',
-  description: 'An object with an ID',
-  fields: () => ({
-    id: {
-      type: new GraphQLNonNull(GraphQLID),
-      description: 'The global unique ID of an object'
-    },
-    type: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: "The type of the object"
+var {nodeInterface, nodeField} = nodeDefinitions(
+  (globalId) => {
+    var {type, id} = fromGlobalId(globalId);
+    if (type === 'User') {
+      return User.getUserById({id: id});
+    } else if (type === 'Hobby') {
+      return Hobby.getHobbyById({id: id});
+    } else {
+      return null;
     }
-  }),
-  resolveType: (obj) => {
-    if (obj.type === 'user') {
+  },
+  (obj) => {
+    if (obj.type == "user") {
       return UserType;
-    } else if (obj.type === 'hobby') {
+    } else if (obj.type == "hobby")  {
       return HobbyType;
+    } else {
+      return null;
     }
   }
-});
+);
 
 let HobbyType = new GraphQLObjectType({
   name: 'Hobby',
@@ -64,7 +63,7 @@ let HobbyType = new GraphQLObjectType({
     }
   }),
 
-  interfaces: [Node]
+  interfaces: [nodeInterface]
 });
 
 let UserType = new GraphQLObjectType({
@@ -95,28 +94,8 @@ let UserType = new GraphQLObjectType({
     }
   }),
 
-  interfaces: [Node]
+  interfaces: [nodeInterface]
 });
-
-let nodeField = {
-  name: 'Node',
-  type: Node,
-  description: 'A node interface field',
-  args: {
-    id: {
-      type: new GraphQLNonNull(GraphQLID),
-      description: 'Id of node interface'
-    }
-  },
-  resolve: (obj, {id}) => {
-    return User.getUserById(obj, {id: id})
-      .then((user) => {
-        return user ? user : Hobby.getHobbyById(obj, {id: id});
-      }).then((hobby) => {
-        return hobby;
-      });
-  }
-};
 
 let UserQueries = {
   users: {
