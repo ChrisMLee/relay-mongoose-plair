@@ -1,5 +1,6 @@
 import User from './Models/UserSchema.es6';
 import Hobby from './Models/HobbySchema.es6';
+import Playlist from './Models/PlaylistSchema.js';
 
 import {
   GraphQLObjectType,
@@ -30,6 +31,8 @@ var {nodeInterface, nodeField} = nodeDefinitions(
       return User.getUserById({id: id});
     } else if (type === 'Hobby') {
       return Hobby.getHobbyById({id: id});
+    } else if (type === 'Playlist') {
+      return Playlist.getPlaylistById({id: id});
     } else {
       return null;
     }
@@ -39,7 +42,9 @@ var {nodeInterface, nodeField} = nodeDefinitions(
       return UserType;
     } else if (obj.type == "hobby")  {
       return HobbyType;
-    } else {
+    } else if (obj.type == "playlist")  {
+      return PlaylistType;
+    }else {
       return null;
     }
   }
@@ -88,6 +93,30 @@ let UserType = new GraphQLObjectType({
     },
     friends: {
       type: new GraphQLList(UserType)
+    },
+    playlists: {
+      type: new GraphQLList(PlaylistType)
+    },
+    type: {
+      type: new GraphQLNonNull(GraphQLString)
+    }
+  }),
+
+  interfaces: [nodeInterface]
+});
+
+let PlaylistType = new GraphQLObjectType({
+  name: 'Playlist',
+  description: 'A playlist',
+  fields: () => ({
+    id: {
+      type: new GraphQLNonNull(GraphQLID)
+    },
+    title: {
+      type: GraphQLString
+    },
+    _creatorId: {
+      type: GraphQLString
     },
     type: {
       type: new GraphQLNonNull(GraphQLString)

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 import {UserSchema as User } from '../data/Models/UserSchema.es6';
 import {HobbySchema as Hobby } from '../data/Models/HobbySchema.es6';
+import {PlaylistSchema as Playlist } from '../data/Models/PlaylistSchema.js';
 
 mongoose.connect('mongodb://localhost/test');
 
@@ -80,7 +81,27 @@ hobbyFlying.save();
 hobbyHorses.save();
 hobbySleeping.save();
 
-userRichard.save();
+userRichard.save(function (err) {
+  if(err){
+    console.log(err)
+  }
+
+  let chillPlaylist = new Playlist({
+    title: "Chill Tracks",
+    type: "playlist",
+    _creatorId: userRichard.id
+  });
+
+  let hypePlaylist = new Playlist({
+    title: "Turn Up",
+    type: "playlist",
+    _creatorId: userRichard.id
+  });
+
+  chillPlaylist.save();
+  hypePlaylist.save();
+
+});
 userDonald.save();
 userLinus.save();
 userTim.save();

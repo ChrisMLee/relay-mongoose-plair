@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 
 import Hobby from './HobbySchema.es6';
 
+import Playlist from './PlaylistSchema.js';
+
 let UserSchema = new mongoose.Schema({
   id: {
     type: String,
@@ -27,6 +29,7 @@ exports.UserSchema = User;
 function getUserById(id) {
   return new Promise((resolve, reject) => {
     User.findOne({id:id}).populate('hobbies friends').exec((err,res) => {
+        let finalResult = Object.assign(res, playlists: Playlist.find({_creatorId: res.id}) );
         err ? reject(err) : resolve(res);
     });
   });
