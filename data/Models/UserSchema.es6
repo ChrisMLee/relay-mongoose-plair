@@ -29,8 +29,12 @@ exports.UserSchema = User;
 function getUserById(id) {
   return new Promise((resolve, reject) => {
     User.findOne({id:id}).populate('hobbies friends').exec((err,res) => {
-        let finalResult = Object.assign(res, playlists: Playlist.find({_creatorId: res.id}) );
-        err ? reject(err) : resolve(res);
+        if(err){ console.log(err) }
+        Playlist.getPlaylistsForUser(res.id).then((found)=>{ 
+          let finalResult = Object.assign(res, {playlists: found});
+          console.log(finalResult)
+          resolve(finalResult);
+        });
     });
   });
 }

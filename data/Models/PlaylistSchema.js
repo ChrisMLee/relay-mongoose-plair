@@ -24,3 +24,11 @@ exports.getPlaylistById = (root, {id}) => {
     })
   });
 };
+
+exports.getPlaylistsForUser = (id) => {
+  return new Promise((resolve, reject) => {
+    Playlist.find({_creatorId: id}).exec((err, res) => {
+      err ? reject(err) : resolve(res);
+    })
+  });
+};
