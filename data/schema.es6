@@ -118,6 +118,30 @@ let PlaylistType = new GraphQLObjectType({
     _creatorId: {
       type: GraphQLString
     },
+    songs: {
+      type: new GraphQLList(SongType)
+    },
+    type: {
+      type: new GraphQLNonNull(GraphQLString)
+    }
+  }),
+
+  interfaces: [nodeInterface]
+});
+
+let SongType = new GraphQLObjectType({
+  name: 'Song',
+  description: 'A song',
+  fields: () => ({
+    id: {
+      type: new GraphQLNonNull(GraphQLID)
+    },
+    name: {
+      type: GraphQLString
+    },
+    artist: {
+      type: GraphQLString
+    },
     type: {
       type: new GraphQLNonNull(GraphQLString)
     }
@@ -160,6 +184,18 @@ let HobbyQueries = {
   hobbies: {
     type: new GraphQLList(HobbyType),
     resolve: Hobby.getListOfHobbies
+  }
+};
+
+let PlaylistQueries = {
+  playlist: {
+    type: PlaylistType,
+    args: {
+      id: {
+        type: GraphQLID
+      }
+    },
+    resolve: Playlist.getPlaylistById
   }
 };
 
@@ -211,6 +247,7 @@ let RootQuery = new GraphQLObjectType({
     users: UserQueries.users,
     hobby: HobbyQueries.hobby,
     hobbies: HobbyQueries.hobbies,
+    playlist: PlaylistQueries.playlist,
     node: nodeField
   })
 });

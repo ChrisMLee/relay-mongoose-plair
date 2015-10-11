@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import {UserSchema as User } from '../data/Models/UserSchema.es6';
 import {HobbySchema as Hobby } from '../data/Models/HobbySchema.es6';
 import {PlaylistSchema as Playlist } from '../data/Models/PlaylistSchema.js';
+import {SongSchema as Song } from '../data/Models/SongSchema.js';
 
 mongoose.connect('mongodb://localhost/test');
 
@@ -81,6 +82,29 @@ hobbyFlying.save();
 hobbyHorses.save();
 hobbySleeping.save();
 
+let songTuesday = new Song({
+  name: "Tuesday",
+  artist: "ilovemakonnen",
+  type: "song"
+});
+
+let songGoAway = new Song({
+  name: "Go Away",
+  artist: "TOPS",
+  type: "song"
+})
+
+let songLoveSosa = new Song({
+  name: "Love Sosa",
+  artist: "Chief Keef",
+  type: "song"
+})
+
+songTuesday.save();
+songGoAway.save();
+songLoveSosa.save();
+
+
 userRichard.save(function (err) {
   if(err){
     console.log(err)
@@ -89,13 +113,15 @@ userRichard.save(function (err) {
   let chillPlaylist = new Playlist({
     title: "Chill Tracks",
     type: "playlist",
-    _creatorId: userRichard.id
+    _creatorId: userRichard.id,
+    songs: [songGoAway]
   });
 
   let hypePlaylist = new Playlist({
     title: "Turn Up",
     type: "playlist",
-    _creatorId: userRichard.id
+    _creatorId: userRichard.id,
+    songs: [songTuesday, songLoveSosa]
   });
 
   chillPlaylist.save();
