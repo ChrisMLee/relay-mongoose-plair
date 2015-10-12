@@ -32,7 +32,7 @@ function getUserById(id) {
         if(err){ console.log(err) }
         Playlist.getPlaylistsForUser(res.id).then((found)=>{ 
           let finalResult = Object.assign(res, {playlists: found});
-          console.log(finalResult)
+          // console.log(finalResult)
           resolve(finalResult);
         });
     });

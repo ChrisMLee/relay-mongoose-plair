@@ -23,7 +23,6 @@ exports.PlaylistSchema = Playlist;
 exports.getPlaylistById = (root, {id}) => {
   return new Promise((resolve, reject) => {
     Playlist.findOne({id:id}).populate('songs').exec((err, res) => {
-      console.log('A playlist result was found', res);
       err ? reject(err) : resolve(res);
     })
   });
@@ -31,8 +30,14 @@ exports.getPlaylistById = (root, {id}) => {
 
 exports.getPlaylistsForUser = (id) => {
   return new Promise((resolve, reject) => {
-    Playlist.find({_creatorId: id}).exec((err, res) => {
-      err ? reject(err) : resolve(res);
+    Playlist.find({_creatorId: id}).populate('songs').exec((err, res) => {
+      if(err){
+        console.log(err);
+        reject(err);
+      }
+      let populated = Playlist.populate(res, { path: 'songs', model: 'Song' });
+      console.log('the populated', populated);
+      populated.then((finalRes)=>{ resolve(finalRes) });
     })
   });
 };
