@@ -1,4 +1,5 @@
 import Relay from 'react-relay';
+import React from 'react';
 
 class Hobby extends React.Component {
   render() {
@@ -18,6 +19,7 @@ export default Relay.createContainer(Hobby, {
   fragments: {
     hobby: () => Relay.QL`
       fragment on Hobby {
+        id
         title
         description
       }`

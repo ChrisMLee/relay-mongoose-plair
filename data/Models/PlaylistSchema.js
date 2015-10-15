@@ -36,7 +36,7 @@ exports.getPlaylistsForUser = (id) => {
         reject(err);
       }
       let populated = Playlist.populate(res, { path: 'songs', model: 'Song' });
-      console.log('the populated', populated);
+      //console.log('the populated', populated);
       populated.then((finalRes)=>{ resolve(finalRes) });
     })
   });

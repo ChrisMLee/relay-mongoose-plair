@@ -1,11 +1,12 @@
 import Relay from 'react-relay';
 import Hobby from './Hobby.js';
+import React from 'react';
 
 class HobbyList extends React.Component {
   render() {
     let user = this.props.user;
     let hobbies = user.hobbies.map((hobby) => {
-      return <Hobby hobby={hobby} />;
+      return <Hobby key={hobby.__dataID__} hobby={hobby} />;
     });
 
     return (<div>

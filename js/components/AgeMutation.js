@@ -1,4 +1,5 @@
 import Relay from 'react-relay';
+import React from 'react';
 
 export default class AgeMutation extends Relay.Mutation {
   static fragments = {

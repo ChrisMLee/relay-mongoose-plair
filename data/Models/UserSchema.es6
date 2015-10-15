@@ -30,11 +30,13 @@ function getUserById(id) {
   return new Promise((resolve, reject) => {
     User.findOne({id:id}).populate('hobbies friends').exec((err,res) => {
         if(err){ console.log(err) }
-        Playlist.getPlaylistsForUser(res.id).then((found)=>{ 
-          let finalResult = Object.assign(res, {playlists: found});
-          // console.log(finalResult)
-          resolve(finalResult);
-        });
+        if(res){
+          Playlist.getPlaylistsForUser(res.id).then((found)=>{ 
+            let finalResult = Object.assign(res, {playlists: found});
+            // console.log(finalResult)
+            resolve(finalResult);
+          });
+        }
     });
   });
 }
