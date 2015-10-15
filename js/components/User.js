@@ -2,6 +2,7 @@ import Relay from 'react-relay';
 import React from 'react';
 import HobbyList from './HobbyList.js';
 import FriendsList from './FriendsList.js';
+import Playlists from './Playlists';
 import {Age} from './Age.js';
 
 class User extends React.Component {
@@ -15,6 +16,7 @@ class User extends React.Component {
         <HobbyList user={user} />
         <h2>Friends</h2>
         <FriendsList user={user} />
+        <Playlists user={user} />
         <Age user={user} />
       </div>
     );
@@ -31,6 +33,7 @@ export default Relay.createContainer(User, {
         ${Age.getFragment('user')}
         ${HobbyList.getFragment('user')}
         ${FriendsList.getFragment('user')}
+        ${Playlists.getFragment('user')}
       }
     `
   }
