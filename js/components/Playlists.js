@@ -5,8 +5,10 @@ import React from 'react';
 class Playlists extends React.Component {
   render() {
     let user = this.props.user;
+    const { actions } = this.props;
+
     let playlists = user.playlists.map((playlist) => {
-      return <Playlist key={playlist.__dataID__} playlist={playlist} />;
+      return <Playlist key={playlist.__dataID__} playlist={playlist} actions={actions}/>;
     });
 
     return (<div>

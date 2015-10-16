@@ -3,9 +3,11 @@ import React from 'react';
 
 class Song extends React.Component {
   render() {
+    const {setSong} = this.props;
+    console.log('guess what I was created with these props', this.props);
     let song = this.props.song;
     return (
-      <li>
+      <li onClick={() => {setSong('thing'); console.log('at least it was clicked', setSong('thing'));} }>
         <h4>{song.artist}</h4>
         <p>{song.name}</p>
       </li>
@@ -13,10 +15,13 @@ class Song extends React.Component {
   }
 }
 
+
 export default Relay.createContainer(Song, {
   fragments: {
-    // this is what your props are asking for
+    // this is 'this.props.song' is asking for
+    // 'fragment on Song' is a fragment on the Song component 
     song: () => Relay.QL`
+
       fragment on Song {
         id
         name

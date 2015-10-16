@@ -4,9 +4,10 @@ import Song from './Song'
 
 class Playlist extends React.Component {
   render() {
+    const { actions } = this.props;
     let playlist = this.props.playlist;
     let songs = playlist.songs.map((song) => {
-      return <Song key={song.__dataID__} song={song} />;
+      return <Song key={song.__dataID__} song={song} {...actions }/>;
     });
     return (
       <li>
@@ -18,6 +19,8 @@ class Playlist extends React.Component {
     );
   }
 }
+
+// Fragments: named query snippets that specify what data to fetch for an object of a given type. 
 
 export default Relay.createContainer(Playlist, {
   fragments: {

@@ -8,8 +8,8 @@ import {Age} from './Age.js';
 class User extends React.Component {
   render() {
     var user = this.props.user;
-    console.log('THE PROPS', this.props);
-
+    const { actions } = this.props;
+    
     return (
       <div>
         <h1>Hello {user.name} {user.surname}</h1>
@@ -17,7 +17,7 @@ class User extends React.Component {
         <HobbyList user={user} />
         <h2>Friends</h2>
         <FriendsList user={user} />
-        <Playlists user={user} />
+        <Playlists user={user} actions={actions}/>
         <Age user={user} />
       </div>
     );

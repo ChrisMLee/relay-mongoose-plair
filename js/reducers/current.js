@@ -1,16 +1,17 @@
 import { SET_SONG } from '../actions/current';
 
 
-const INITIAL_STATE = {
-  currentSong : {}
+const initialState = {
+  currentSong : {name: "Cool Song"}
 };
 
-export default function current(state = INITIAL_STATE, action) {
+export default function current(state = initialState, action) {
   switch (action.type) {
   case SET_SONG:
+    console.log('somebody tried to set a song');
     return {
       ...state,
-      currentSong: action.song
+      currentSong: {name: action.song}
     }
   default:
     return state

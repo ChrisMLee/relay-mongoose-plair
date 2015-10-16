@@ -17,20 +17,23 @@ let userId = getQueryParams(document.location.search).user || "561aecc701caeedd0
 
 class App extends React.Component {
   render() {
-  	const { currentSong, actions } = this.props;
+  	const { currentState, actions } = this.props;
     return (
       <div>
+      	<div>
+      		<h1>Current Song: {currentState.currentSong.name}</h1>
+      	</div>
         <Relay.RootContainer
         	Component={User}
         	route={new AppHomeRoute({userId: userId})}
         	renderFetched={function(data) {
 			    return (
-			    	<User {...data} currentSong={currentSong} actions={actions} />
+			    	<User {...data} currentState={currentState} actions={actions} />
 			    );
 			}}
 
 
-        />  
+        />
       </div>
     );
   }
@@ -38,7 +41,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    currentSong: state.currentSong
+    currentState: state.current
   }
 }
 
