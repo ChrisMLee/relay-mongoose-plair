@@ -88,8 +88,7 @@ let UserType = new GraphQLObjectType({
       type: GraphQLInt
     },
     hobbies: {
-      type: new GraphQLList(HobbyType),
-      description: 'The ships used by the faction.'
+      type: new GraphQLList(HobbyType)
     },
     friends: {
       type: new GraphQLList(UserType)

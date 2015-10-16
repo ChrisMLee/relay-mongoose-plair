@@ -8,6 +8,7 @@ import {Age} from './Age.js';
 class User extends React.Component {
   render() {
     var user = this.props.user;
+    console.log('THE PROPS', this.props);
 
     return (
       <div>

@@ -2,10 +2,11 @@ import { connect } from 'react-redux';
 // import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions'
 import Relay from 'react-relay';
 import React from 'react';
-
+import { bindActionCreators } from 'redux';
 import AppHomeRoute from '../routes/AppHomeRoute';
 import User from '../components/User.js';
 import {getQueryParams} from '../utils'
+import * as AppActions from '../actions/current';
 
 // TODO try getting different user ids to work here for separate logins
 
@@ -16,9 +17,20 @@ let userId = getQueryParams(document.location.search).user || "561aecc701caeedd0
 
 class App extends React.Component {
   render() {
+  	const { currentSong, actions } = this.props;
     return (
       <div>
-        <Relay.RootContainer Component={User} route={new AppHomeRoute({userId: userId})}/>  
+        <Relay.RootContainer
+        	Component={User}
+        	route={new AppHomeRoute({userId: userId})}
+        	renderFetched={function(data) {
+			    return (
+			    	<User {...data} currentSong={currentSong} actions={actions} />
+			    );
+			}}
+
+
+        />  
       </div>
     );
   }
@@ -30,4 +42,10 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(AppActions, dispatch)
+  };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps)(App);
