@@ -4,30 +4,33 @@ import ReactDOM from 'react-dom';
 import Relay from 'react-relay';
 import React from 'react';
 
-let userId = getQueryParams(document.location.search).user || "561aecc701caeedd0b93ea97";
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import App from './containers/App';
+
+import plairApp from './reducers';
+
+const store = createStore(plairApp);
+
+//let userId = getQueryParams(document.location.search).user || "561aecc701caeedd0b93ea97";
+
+// ReactDOM.render(
+//   <Relay.RootContainer
+//     Component={User}
+//     //TODO Update userId
+//     route={new AppHomeRoute({userId: userId})}
+//   />,
+//   document.getElementById('root')
+// );
+
+let rootElement = document.getElementById('root');
 
 ReactDOM.render(
-  <Relay.RootContainer
-    Component={User}
-    //TODO Update userId
-    route={new AppHomeRoute({userId: userId})}
-  />,
-  document.getElementById('root')
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  rootElement
 );
 
 
 
-
-function getQueryParams(qs) {
-  qs = qs.split('+').join(' ');
-
-  var params = {},
-    tokens,
-    re = /[?&]?([^=]+)=([^&]*)/g;
-
-  while (tokens = re.exec(qs)) {
-    params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-  }
-
-  return params;
-}

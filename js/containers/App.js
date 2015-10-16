@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import Relay from 'react-relay';
 import React from 'react';
 
+import AppHomeRoute from '../routes/AppHomeRoute';
 import User from '../components/User.js';
+import {getQueryParams} from '../utils'
 
 // TODO try getting different user ids to work here for separate logins
 
@@ -22,4 +24,10 @@ class App extends React.Component {
   }
 }
 
-export default connect(select)(App);
+function mapStateToProps(state) {
+  return {
+    currentSong: state.currentSong
+  }
+}
+
+export default connect(mapStateToProps)(App);
