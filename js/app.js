@@ -8,11 +8,9 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from './containers/App';
 
-import plairApp from './reducers/index';
+import rootReducer from './reducers';
 
-const store = createStore(plairApp);
-
-console.log('the store', store.getState());
+const store = createStore(rootReducer);
 
 //let userId = getQueryParams(document.location.search).user || "561aecc701caeedd0b93ea97";
 

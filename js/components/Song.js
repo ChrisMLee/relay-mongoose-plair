@@ -7,7 +7,7 @@ class Song extends React.Component {
     console.log('guess what I was created with these props', this.props);
     let song = this.props.song;
     return (
-      <li onClick={() => {setSong('thing'); console.log('at least it was clicked', setSong('thing'));} }>
+      <li onClick={() => {setSong(song.name);} }>
         <h4>{song.artist}</h4>
         <p>{song.name}</p>
       </li>

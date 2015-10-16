@@ -1,4 +1,4 @@
-import { SET_SONG } from '../actions/current';
+import { SET_SONG } from '../constants/ActionTypes.js';
 
 
 const initialState = {
@@ -6,12 +6,12 @@ const initialState = {
 };
 
 export default function current(state = initialState, action) {
+  console.log('Reducer was called with args', action.type);
   switch (action.type) {
   case SET_SONG:
-    console.log('somebody tried to set a song');
     return {
       ...state,
-      currentSong: {name: action.song}
+      currentSong: {name: action.text}
     }
   default:
     return state

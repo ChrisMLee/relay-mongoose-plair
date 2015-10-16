@@ -16,6 +16,9 @@ import * as AppActions from '../actions/current';
 let userId = getQueryParams(document.location.search).user || "561aecc701caeedd0b93ea97";
 
 class App extends React.Component {
+  componentDidMount(){
+  	//console.log('the beginning', this.props.actions.setSong('thing'));
+  }
   render() {
   	const { currentState, actions } = this.props;
     return (
