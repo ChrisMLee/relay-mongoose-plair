@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Relay from 'react-relay';
 import React from 'react';
 
-import User from './User.js';
+import User from '../components/User.js';
 
 // TODO try getting different user ids to work here for separate logins
 
