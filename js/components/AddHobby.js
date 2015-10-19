@@ -4,7 +4,7 @@ import React from 'react';
 class AddHobby extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {hobby: ""};
+    this.state = {hobby: ''};
   }
 
   onClick (event, something) {

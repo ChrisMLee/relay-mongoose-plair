@@ -5,6 +5,11 @@ import FriendsList from './FriendsList.js';
 import Playlists from './Playlists';
 import {Age} from './Age.js';
 
+// <h2>Hobbies</h2>
+// <HobbyList user={user} />
+// <h2>Friends</h2>
+// <FriendsList user={user} />
+
 class User extends React.Component {
   render() {
     var user = this.props.user;
@@ -13,10 +18,6 @@ class User extends React.Component {
     return (
       <div>
         <h1>Hello {user.name} {user.surname}</h1>
-        <h2>Hobbies</h2>
-        <HobbyList user={user} />
-        <h2>Friends</h2>
-        <FriendsList user={user} />
         <Playlists user={user} actions={actions}/>
         <Age user={user} />
       </div>
