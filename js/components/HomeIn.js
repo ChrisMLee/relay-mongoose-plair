@@ -14,7 +14,7 @@ let userId = getQueryParams(document.location.search).user || '562592cfde07141f2
 
 // If userId/logged in state: render something else render something else
 
-export default class Home extends React.Component {
+class HomeIn extends React.Component {
   componentDidMount(){
   	//console.log('the beginning', this.props.actions.setSong('thing'));
   }
@@ -33,7 +33,7 @@ export default class Home extends React.Component {
 }
 
 
-export default Relay.createContainer(Home, {
+export default Relay.createContainer(HomeIn, {
   fragments: {
     user: () => Relay.QL`
       fragment on User {

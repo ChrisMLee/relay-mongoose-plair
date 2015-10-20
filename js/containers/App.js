@@ -8,7 +8,8 @@ import User from '../components/User.js';
 import {getQueryParams} from '../utils'
 import * as AppActions from '../actions/current';
 
-import Home from '../components/Home';
+import HomeIn from '../components/HomeIn';
+import HomeOut from '../components/HomeOut';
 
 // TODO try getting different user ids to work here for separate logins
 
@@ -22,15 +23,18 @@ class App extends React.Component {
   }
   render() {
   	const { currentState, actions } = this.props;
-    return (
-      <Relay.RootContainer
-        Component={Home}
+    let homeArea = currentState.currentUser.id ? <Relay.RootContainer
+        Component={HomeIn}
         route={new AppHomeRoute({userId: currentState.currentUser.id})}
         renderFetched={function(data) {
         return (
-          <Home {...data} currentState={currentState} actions={actions} />
+          <HomeIn {...data} currentState={currentState} actions={actions} />
         );
-      }}/> 
+      }}/> : <HomeOut currentState={currentState} actions={actions} />;
+    return (
+      <div>
+        {homeArea}
+      </div>
     );
   }
 }
