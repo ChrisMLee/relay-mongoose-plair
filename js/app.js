@@ -4,13 +4,28 @@ import ReactDOM from 'react-dom';
 import Relay from 'react-relay';
 import React from 'react';
 
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import App from './containers/App';
 
+import storageMiddleware from './libs/storageMiddleware';
+
+// const storageMiddleware = store => next => action => {
+//   console.group(action.type);
+//   console.info('dispatching', action);
+//   let result = next(action);
+//   console.log('next state', store.getState());
+//   console.groupEnd(action.type);
+//   return result;
+// };
+
+
 import rootReducer from './reducers';
 
-const store = createStore(rootReducer);
+//const store = createStore(rootReducer);
+
+let createStoreWithMiddleware = applyMiddleware(storageMiddleware)(createStore);
+let store = createStoreWithMiddleware(rootReducer);
 
 //let userId = getQueryParams(document.location.search).user || "561aecc701caeedd0b93ea97";
 

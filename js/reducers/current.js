@@ -1,4 +1,4 @@
-import { SET_SONG, SET_LOGIN } from '../constants/ActionTypes.js';
+import { SET_SONG, SET_LOGIN, LOGOUT } from '../constants/ActionTypes.js';
 
 // https://medium.com/@clayallsopp/making-tucci-the-technical-details-cc7aded6c75f
 
@@ -19,6 +19,11 @@ export default function current(state = initialState, action) {
     return {
       ...state,
       currentUser: {id: action.userId}
+    }
+  case LOGOUT:
+    return {
+      ...state,
+      currentUser: {id: ''}
     }
   default:
     return state

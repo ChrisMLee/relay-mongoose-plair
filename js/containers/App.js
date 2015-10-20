@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import Relay from 'react-relay';
 import React from 'react';
 import { bindActionCreators } from 'redux';
+
+
 import AppHomeRoute from '../routes/AppHomeRoute';
 import User from '../components/User.js';
 import {getQueryParams} from '../utils'
@@ -23,6 +25,7 @@ class App extends React.Component {
   	//console.log('the beginning', this.props.actions.setSong('thing'));
     let storedUser = storage.get('currentUser') || '';
     console.log(storage.get('currentUser'));
+    //storage.set('currentUser','');
     this.props.actions.setLogin(storedUser);
   }
   render() {
