@@ -1,5 +1,6 @@
 import React from 'react';
 import Relay from 'react-relay';
+import storage from '../libs/storage';
 
 export default class HeaderLoggedOut extends React.Component {
   constructor(props){
@@ -21,7 +22,10 @@ export default class HeaderLoggedOut extends React.Component {
     }
   }
   enterLogin = () => {
-    this.props.actions.setLogin(userId);
+    //console.log('enterLogin called with userId', userId);
+    // TODO - this is not dry - needs to be incorporated into the action somehow
+    storage.set('currentUser', this.state.userId);
+    this.props.actions.setLogin(this.state.userId);
   };
   render() {
   	const { currentState, actions } = this.props;
@@ -32,7 +36,7 @@ export default class HeaderLoggedOut extends React.Component {
       		<h3>Log In Now</h3>
           <div>
             <input onKeyDown={this.handleKeyDown} onChange={this.handleChange} value={userId} type="text" placeholder="Enter User Id" />
-            <button onClick={() => {actions.setLogin(userId);} }>Add</button>
+            <button onClick={() => { storage.set('currentUser', this.state.userId); actions.setLogin(userId);} }>Add</button>
           </div>
       </div>
     );

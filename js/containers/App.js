@@ -10,6 +10,7 @@ import * as AppActions from '../actions/current';
 
 import HomeIn from '../components/HomeIn';
 import HomeOut from '../components/HomeOut';
+import storage from '../libs/storage';
 
 // TODO try getting different user ids to work here for separate logins
 
@@ -20,7 +21,9 @@ let userId = getQueryParams(document.location.search).user || '562592cfde07141f2
 class App extends React.Component {
   componentDidMount(){
   	//console.log('the beginning', this.props.actions.setSong('thing'));
-   this.props.actions.setLogin('');
+    let storedUser = storage.get('currentUser') || '';
+    console.log(storage.get('currentUser'));
+    this.props.actions.setLogin(storedUser);
   }
   render() {
   	const { currentState, actions } = this.props;
