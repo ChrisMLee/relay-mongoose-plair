@@ -14,7 +14,7 @@ import Home from '../components/Home';
 
 // http://rackt.org/redux/docs/basics/ExampleTodoList.html
 
-let userId = getQueryParams(document.location.search).user || '56253cfbc03328c91d730276';
+let userId = getQueryParams(document.location.search).user || '562592cfde07141f228bbd7f';
 
 class App extends React.Component {
   componentDidMount(){
@@ -23,7 +23,14 @@ class App extends React.Component {
   render() {
   	const { currentState, actions } = this.props;
     return (
-      <Home currentState={currentState} actions={actions}/> 
+      <Relay.RootContainer
+        Component={Home}
+        route={new AppHomeRoute({userId: currentState.currentUser.id})}
+        renderFetched={function(data) {
+        return (
+          <Home {...data} currentState={currentState} actions={actions} />
+        );
+      }}/> 
     );
   }
 }

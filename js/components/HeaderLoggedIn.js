@@ -1,7 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay';
 
-class Header extends React.Component {
+class HeaderLoggedIn extends React.Component {
   componentDidMount(){
   	//console.log('the beginning', this.props.actions.setSong('thing'));
   }
@@ -19,7 +19,7 @@ class Header extends React.Component {
 }
 
 
-export default Relay.createContainer(Header, {
+export default Relay.createContainer(HeaderLoggedIn, {
   fragments: {
     user: () => Relay.QL`
       fragment on User {

@@ -7,7 +7,10 @@ import AppHomeRoute from '../routes/AppHomeRoute';
 import UserTwo from './User';
 import Header from './Header';
 
-let userId = getQueryParams(document.location.search).user || '56253cfbc03328c91d730276';
+import HeaderLoggedIn from './HeaderLoggedIn';
+import HeaderLoggedOut from './HeaderLoggedOut';
+
+let userId = getQueryParams(document.location.search).user || '562592cfde07141f228bbd7f';
 
 // If userId/logged in state: render something else render something else
 
@@ -18,10 +21,12 @@ export default class Home extends React.Component {
   render() {
   	let user = this.props.user;
   	const { currentState, actions } = this.props;
+    // let userArea = currentState.currentUser.id ? <UserTwo user={user} actions={actions}/> : null;
+    // let headerArea = currentState.currentUser.id ? <HeaderLoggedIn user={user} currentState={currentState} actions={actions}/> : <HeaderLoggedOut currentState={currentState} actions={actions}/>;
     return (
       <div>
-      	<Header user={user} currentState={currentState}/>
-        <UserTwo user={user}/>
+      	<HeaderLoggedIn user={user} currentState={currentState} actions={actions}/>
+        <UserTwo user={user} actions={actions}/>
       </div>
     );
   }
@@ -36,6 +41,7 @@ export default Relay.createContainer(Home, {
         name
         surname
         ${UserTwo.getFragment('user')}
+        ${HeaderLoggedIn.getFragment('user')}
       }
     `
   }
