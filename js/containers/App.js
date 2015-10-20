@@ -20,7 +20,7 @@ let userId = getQueryParams(document.location.search).user || '562592cfde07141f2
 class App extends React.Component {
   componentDidMount(){
   	//console.log('the beginning', this.props.actions.setSong('thing'));
-   this.props.actions.setLogin('562592cfde07141f228bbd7f');
+   this.props.actions.setLogin('');
   }
   render() {
   	const { currentState, actions } = this.props;
