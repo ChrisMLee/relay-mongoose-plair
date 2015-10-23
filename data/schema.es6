@@ -138,6 +138,9 @@ let SongType = new GraphQLObjectType({
     name: {
       type: GraphQLString
     },
+    youtubeLink: {
+      type: GraphQLString
+    },
     artist: {
       type: GraphQLString
     },

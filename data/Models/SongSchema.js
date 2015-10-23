@@ -10,6 +10,7 @@ var SongSchema = new mongoose.Schema({
   },
   name: String,
   artist: String,
+  youtubeLink: String,
   type: String
 });
 

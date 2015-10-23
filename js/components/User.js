@@ -17,7 +17,6 @@ class User extends React.Component {
     
     return (
       <div>
-        <h1>Hello {user.name} {user.surname}</h1>
         <Playlists user={user} actions={actions}/>
         <Age user={user} />
       </div>

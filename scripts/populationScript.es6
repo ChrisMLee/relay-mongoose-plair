@@ -85,18 +85,21 @@ hobbySleeping.save();
 let songTuesday = new Song({
   name: "Tuesday",
   artist: "ilovemakonnen",
+  youtubeLink: "https://www.youtube.com/watch?v=avFq9errZCk",
   type: "song"
 });
 
 let songGoAway = new Song({
-  name: "Go Away",
+  name: "Change Of Heart",
   artist: "TOPS",
+  youtubeLink: "https://www.youtube.com/watch?v=zBXI9_-sRMc",
   type: "song"
 })
 
 let songLoveSosa = new Song({
   name: "Love Sosa",
   artist: "Chief Keef",
+  youtubeLink: "https://www.youtube.com/watch?v=YWyHZNBz6FE",
   type: "song"
 })
 

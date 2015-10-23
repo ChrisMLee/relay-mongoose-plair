@@ -6,6 +6,7 @@ import AppHomeRoute from '../routes/AppHomeRoute';
 
 import UserTwo from './User';
 import Header from './Header';
+import VideoPlayer from './VideoPlayer'
 
 import HeaderLoggedIn from './HeaderLoggedIn';
 import HeaderLoggedOut from './HeaderLoggedOut';
@@ -26,10 +27,18 @@ class HomeIn extends React.Component {
     return (
       <div>
       	<HeaderLoggedIn user={user} currentState={currentState} actions={actions}/>
-        <UserTwo user={user} actions={actions}/>
+        <div style={mainStyle}>
+          <UserTwo user={user} actions={actions}/>
+          <VideoPlayer currentState={currentState} actions={actions}/>
+        </div>
       </div>
     );
   }
+}
+
+var mainStyle = {
+    display: 'flex',
+    flexDirection: 'row'
 }
 
 

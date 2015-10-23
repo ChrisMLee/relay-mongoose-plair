@@ -3,8 +3,9 @@ import { SET_SONG, SET_LOGIN, LOGOUT } from '../constants/ActionTypes.js';
 // https://medium.com/@clayallsopp/making-tucci-the-technical-details-cc7aded6c75f
 
 const initialState = {
-  currentSong : {name: 'Cool Song'},
-  currentUser : {id: ''}
+  currentSong : {name: 'Xscape - Just Kickin It', youtubeLink: 'https://www.youtube.com/watch?v=w_BTEFAVwjU'},
+  currentUser : {id: ''},
+  playing: false
 };
 
 export default function current(state = initialState, action) {
@@ -13,7 +14,8 @@ export default function current(state = initialState, action) {
   case SET_SONG:
     return {
       ...state,
-      currentSong: {name: action.text}
+      currentSong: {name: action.songObject.name, youtubeLink: action.songObject.youtubeLink},
+      playing: true
     }
   case SET_LOGIN:
     return {
