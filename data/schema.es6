@@ -18,6 +18,7 @@ import {
   connectionArgs,
   connectionDefinitions,
   connectionFromArray,
+  cursorForObjectInConnection,
   fromGlobalId,
   globalIdField,
   mutationWithClientMutationId,
@@ -71,6 +72,40 @@ let HobbyType = new GraphQLObjectType({
   interfaces: [nodeInterface]
 });
 
+let PlaylistType = new GraphQLObjectType({
+  name: 'Playlist',
+  description: 'A playlist',
+  fields: () => ({
+    id: {
+      type: new GraphQLNonNull(GraphQLID)
+    },
+    title: {
+      type: GraphQLString
+    },
+    _creatorId: {
+      type: GraphQLString
+    },
+    songs: {
+      type: new GraphQLList(SongType)
+    },
+    type: {
+      type: new GraphQLNonNull(GraphQLString)
+    }
+  }),
+
+  interfaces: [nodeInterface]
+});
+
+// Create a playlist connection type
+
+var {
+  connectionType: PlaylistConnection,
+  edgeType: PlaylistTypeEdge,
+} = connectionDefinitions({
+  name: 'Playlist',
+  nodeType: PlaylistType,
+});
+
 let UserType = new GraphQLObjectType({
   name: 'User',
   description: 'A user',
@@ -94,31 +129,13 @@ let UserType = new GraphQLObjectType({
       type: new GraphQLList(UserType)
     },
     playlists: {
-      type: new GraphQLList(PlaylistType)
-    },
-    type: {
-      type: new GraphQLNonNull(GraphQLString)
-    }
-  }),
-
-  interfaces: [nodeInterface]
-});
-
-let PlaylistType = new GraphQLObjectType({
-  name: 'Playlist',
-  description: 'A playlist',
-  fields: () => ({
-    id: {
-      type: new GraphQLNonNull(GraphQLID)
-    },
-    title: {
-      type: GraphQLString
-    },
-    _creatorId: {
-      type: GraphQLString
-    },
-    songs: {
-      type: new GraphQLList(SongType)
+      type: PlaylistConnection,
+      args: connectionArgs,
+      resolve: (obj, args) => {
+        return Playlist.getPlaylistsForUser(obj.id).then((res)=>{
+         return connectionFromArray(res, args);
+        });
+      }
     },
     type: {
       type: new GraphQLNonNull(GraphQLString)
@@ -152,6 +169,7 @@ let SongType = new GraphQLObjectType({
   interfaces: [nodeInterface]
 });
 
+// This is the first candidate for pagination
 let UserQueries = {
   users: {
     type: new GraphQLList(UserType),
@@ -239,6 +257,25 @@ let UserUpdateAgeMutation = mutationWithClientMutationId({
   },
 
   mutateAndGetPayload: User.updateAge
+});
+
+let AddSongToPlaylistMutation = mutationWithClientMutationId({
+  name: 'AddSong',
+  inputFields: {
+    playlistId: {type: new GraphQLNonNull(GraphQLID) },
+    youtubeLink: { type: new GraphQLNonNull(GraphQLString) }
+  },
+
+  outputFields: {
+    playlist: {
+      type: PlaylistType,
+      resolve: ({playlistId}) => {
+        return Playlist.getPlaylistById(id)
+      }
+    }
+  },
+
+  mutateAndGetPayload: Playlist.addSong
 });
 
 let RootQuery = new GraphQLObjectType({

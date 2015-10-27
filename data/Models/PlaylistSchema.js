@@ -41,3 +41,12 @@ exports.getPlaylistsForUser = (id) => {
     })
   });
 };
+
+// exports.addSong = (playlistId, songId) => {
+//   return new Promise((resolve, reject) => {
+
+//   });
+// };
+
+
+
