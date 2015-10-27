@@ -11,13 +11,17 @@ import {Age} from './Age.js';
 // <FriendsList user={user} />
 
 class User extends React.Component {
+  constructor(props){
+    super(props);
+    console.log('at least User exists');
+  }
   render() {
     var user = this.props.user;
     const { actions } = this.props;
     
     return (
       <div>
-        <Playlists user={user} actions={actions}/>
+        
         <Age user={user} />
       </div>
     );
@@ -34,7 +38,6 @@ export default Relay.createContainer(User, {
         ${Age.getFragment('user')}
         ${HobbyList.getFragment('user')}
         ${FriendsList.getFragment('user')}
-        ${Playlists.getFragment('user')}
       }
     `
   }

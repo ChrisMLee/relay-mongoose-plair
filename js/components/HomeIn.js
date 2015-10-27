@@ -4,7 +4,7 @@ import {getQueryParams} from '../utils'
 
 import AppHomeRoute from '../routes/AppHomeRoute';
 
-import UserTwo from './User';
+import UserTwo from './UserTwo';
 import Header from './Header';
 import VideoPlayer from './VideoPlayer'
 
@@ -16,6 +16,9 @@ let userId = getQueryParams(document.location.search).user || '562592cfde07141f2
 // If userId/logged in state: render something else render something else
 
 class HomeIn extends React.Component {
+  constructor(props){
+    super(props);
+  }
   componentDidMount(){
   	//console.log('the beginning', this.props.actions.setSong('thing'));
   }
