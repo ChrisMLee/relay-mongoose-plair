@@ -28,7 +28,7 @@ export default Relay.createContainer(UserTwo, {
   fragments: {
     user: () => Relay.QL`
       fragment on User {
-        playlists(first: 2) {
+        playlists(first: 100) {
           edges {
             node {
               id

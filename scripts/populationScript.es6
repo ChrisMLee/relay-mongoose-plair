@@ -83,22 +83,19 @@ hobbyHorses.save();
 hobbySleeping.save();
 
 let songTuesday = new Song({
-  name: "Tuesday",
-  artist: "ilovemakonnen",
+  title: "ILOVEMAKONNEN (FEAT. DRAKE) - TUESDAY",
   youtubeLink: "https://www.youtube.com/watch?v=avFq9errZCk",
   type: "song"
 });
 
 let songGoAway = new Song({
-  name: "Change Of Heart",
-  artist: "TOPS",
+  title: "TOPS - Change of Heart",
   youtubeLink: "https://www.youtube.com/watch?v=zBXI9_-sRMc",
   type: "song"
 })
 
 let songLoveSosa = new Song({
-  name: "Love Sosa",
-  artist: "Chief Keef",
+  title:"Chief Keef - Love Sosa | Shot by @DGainzBeats",
   youtubeLink: "https://www.youtube.com/watch?v=YWyHZNBz6FE",
   type: "song"
 })

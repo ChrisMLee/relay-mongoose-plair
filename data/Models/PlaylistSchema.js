@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 
 import Song from './SongSchema.js';
 
+import request from 'axios';
+
 var PlaylistSchema = new mongoose.Schema({
   id: {
     type: String,
@@ -42,11 +44,24 @@ exports.getPlaylistsForUser = (id) => {
   });
 };
 
-// exports.addSong = (playlistId, songId) => {
-//   return new Promise((resolve, reject) => {
+exports.addSong = ({playlistId, youtubeLink}) => {
+  return new Promise((resolve, reject) => {
+    console.log('addSong called!', playlistId);
+    request.get(`http://www.youtube.com/oembed?url=${youtubeLink}&format=json`)
+    .then(function (response) {
+      console.log('The Response',response.data);
+    })
+    .catch(function (response) {
+      console.log(response);
+    });
 
-//   });
-// };
+
+    Playlist.findOne({id:playlistId}).populate('songs').exec((err, res) => {
+      //res.songs
+      err ? reject(err) : resolve(res);
+    })
+  });
+};
 
 
 

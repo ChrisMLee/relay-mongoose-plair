@@ -11,8 +11,7 @@ class Song extends React.Component {
     let song = this.props.song;
     return (
       <li onClick={() => {setSong(song);} }>
-        <h4>{song.artist}</h4>
-        <p>{song.name}</p>
+        <h4>{song.title}</h4>
       </li>
     );
   }
@@ -27,8 +26,7 @@ export default Relay.createContainer(Song, {
 
       fragment on Song {
         id
-        name
-        artist
+        title
         youtubeLink
       }`
   }

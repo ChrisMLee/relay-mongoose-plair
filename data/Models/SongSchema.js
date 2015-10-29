@@ -8,8 +8,7 @@ var SongSchema = new mongoose.Schema({
     index: true,
     default: mongoose.Types.ObjectId
   },
-  name: String,
-  artist: String,
+  title: String,
   youtubeLink: String,
   type: String
 });
