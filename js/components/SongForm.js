@@ -1,6 +1,8 @@
 import React from 'react';
 import Relay from 'react-relay';
 
+import AddSongMutation from '../mutations/AddSongMutation';
+
 /* Theorectically, this is chill 
 https://facebook.github.io/react/tips/props-in-getInitialState-as-anti-pattern.html
 */
@@ -22,6 +24,12 @@ class SongForm extends React.Component {
       this.setState(state);
     }.bind(this);
   }
+  saveSong = () => {
+    Relay.Store.update(new AddSongMutation({
+      id: this.state.playlist,
+      youtubeLink: this.state.youtubeLink
+    }));
+  }
   render() {
   	const {youtubeLink, playlist} = this.state;
   	const {playlists} = this.props.user;
@@ -39,7 +47,7 @@ class SongForm extends React.Component {
 	      	<select value={playlist} onChange={this.handleChange('playlist')} >
 			  {availablePlaylists}
 			</select>
-			<button>Add Song</button>
+			<button onClick={this.saveSong}>Add Song</button>
       </div>
     );
   }
