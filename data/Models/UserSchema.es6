@@ -96,6 +96,7 @@ exports.updateAge = ({age, id}) => {
   return new Promise((resolve, reject) => {
     User.update({id:id}, {age:age}, (err, res) => {
       res.id = id;
+      console.log('age updated!!!!', res);
       err ? reject(err) : resolve(res);
     });
   });

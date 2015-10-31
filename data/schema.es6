@@ -212,7 +212,9 @@ let PlaylistQueries = {
         type: GraphQLID
       }
     },
-    resolve: Playlist.getPlaylistById
+    resolve: (root, {id}) => {
+      return Playlist.getPlaylistById(id);
+    }
   }
 };
 
@@ -259,19 +261,27 @@ let UserUpdateAgeMutation = mutationWithClientMutationId({
 let AddSongToPlaylistMutation = mutationWithClientMutationId({
   name: 'AddSong',
   inputFields: {
-    playlistId: {type: new GraphQLNonNull(GraphQLID) },
+    id: {type: new GraphQLNonNull(GraphQLID) },
     youtubeLink: { type: new GraphQLNonNull(GraphQLString) }
   },
   outputFields: {
     playlist: {
       type: PlaylistType,
-      resolve: ({playlistId}) => {
-        return Playlist.getPlaylistById(id)
+      resolve: (playlist) => {
+        console.log('AT LEAST RESOLVE GETTING CALLED', Playlist.getPlaylistById(playlist.id));
+        return Playlist.getPlaylistById(playlist.id);
       }
     }
   },
 
-  mutateAndGetPayload: Playlist.addSong
+  mutateAndGetPayload: ({id, youtubeLink}) => {
+    // closure?
+    // function giveFinalResult(result){
+    //   return result;
+    // }
+    // console.log('What is this', Playlist.addSong({id, youtubeLink}));
+    return Playlist.addSong({id, youtubeLink});
+  }
 });
 
 let RootQuery = new GraphQLObjectType({
