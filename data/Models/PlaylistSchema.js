@@ -49,26 +49,32 @@ exports.getPlaylistsForUser = (id) => {
 
 exports.addSong = ({id, youtubeLink}) => {
   return new Promise((resolve, reject) => {
-    // console.log('addSong called!', id);
-    // request.get(`http://www.youtube.com/oembed?url=${youtubeLink}&format=json`)
-    // .then(function (response) {
-    //   //console.log('The Response',response.data);
-    //   let newSong = new SongSchema({
-    //     title: response.title,
-    //     youtubeLink: youtubeLink,
-    //     type: "song"
-    //   }); 
-    // })
-    // .catch(function (response) {
-    //   console.log(response);
-    // });
-    // resolve(id);
+    console.log('addSong called!', id);
+    request.get(`http://www.youtube.com/oembed?url=${youtubeLink}&format=json`)
+    .then(function (response) {
+      console.log('The Response',response.data);
+      let newSong = new SongSchema({
+        title: response.data.title,
+        youtubeLink: youtubeLink,
+        type: "song"
+      });
+      newSong.save();
+      Playlist.update({id: id}, { 
+        $push: { "songs": newSong }
+      }).exec((err, res) => {
+        res.id = id;
+        console.log('at least something found', res);
+        err ? reject(err) : resolve(res);
+      })
+    }).catch(function (response) {
+      console.log(response);
+    });
 
-    Playlist.findOne({id: id}).populate('songs').exec((err, res) => {
-      console.log('at least something found', res);
-      //res.songs
-      err ? reject(err) : resolve(res);
-    })
+    // Playlist.findOne({id: id}).populate('songs').exec((err, res) => {
+    //   console.log('at least something found', res);
+    //   //res.songs
+    //   err ? reject(err) : resolve(res);
+    // })
   });
 };
 
