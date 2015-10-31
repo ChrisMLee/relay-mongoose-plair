@@ -35,7 +35,7 @@ export default Relay.createContainer(Playlists, {
             ${Playlist.getFragment('playlist')}
           }
         }
-      }`
+    }`
   }
 });
 

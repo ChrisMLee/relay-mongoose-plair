@@ -13,7 +13,7 @@ class HeaderLoggedIn extends React.Component {
           <h1>Plair</h1>
           <button onClick={() => {actions.logout();} }>Logout</button>
       		<h3>Hello {user.name} {user.surname}</h3>
-      		<h3>Current Song: {currentState.currentSong.name}</h3>
+      		<h3>Current Song: {currentState.currentSong.title}</h3>
       </div>
     );
   }
