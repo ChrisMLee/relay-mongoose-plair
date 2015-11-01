@@ -1,9 +1,19 @@
 import Relay from 'react-relay';
 import React from 'react';
 
+import DeleteSongMutation from '../mutations/DeleteSongMutation';
+
 class Song extends React.Component {
   constructor(props){
     super(props);
+  }
+  deleteSong(e){
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    Relay.Store.update(new DeleteSongMutation({
+      playlistId: this.props.playlist.id,
+      songId: this.props.song._id
+    }));
   }
   render() {
     const {setSong} = this.props;
@@ -12,6 +22,7 @@ class Song extends React.Component {
     return (
       <li onClick={() => {setSong(song);} }>
         <h4>{song.title}</h4>
+        <button onClick={this.deleteSong.bind(this)}>x</button>
       </li>
     );
   }

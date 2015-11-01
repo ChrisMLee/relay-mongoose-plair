@@ -9,7 +9,7 @@ class Playlist extends React.Component {
     const { actions } = this.props;
     let playlist = this.props.playlist;
     let songs = playlist.songs.map((song) => {
-      return <Song key={song.__dataID__} song={song} {...actions }/>;
+      return <Song key={song.__dataID__} playlist={playlist} song={song} {...actions }/>;
     });
     return (
       <li>
