@@ -2,13 +2,13 @@ import Relay from 'react-relay';
 import React from 'react';
 
 export default class AddSongMutation extends Relay.Mutation {
-	static fragments = {
-		playlist: () => Relay.QL`
-		  fragment on Playlist {
-		    id
-		  }
-		`
-	};
+	// static fragments = {
+	// 	playlist: () => Relay.QL`
+	// 	  fragment on Playlist {
+	// 	    id
+	// 	  }
+	// 	`
+	// };
 
 	getMutation () {
     	return Relay.QL`mutation { addSong }`;
