@@ -69,12 +69,16 @@ exports.addSong = ({id, youtubeLink}) => {
     }).catch(function (response) {
       console.log(response);
     });
+  });
+};
 
-    // Playlist.findOne({id: id}).populate('songs').exec((err, res) => {
-    //   console.log('at least something found', res);
-    //   //res.songs
-    //   err ? reject(err) : resolve(res);
-    // })
+exports.deleteSong = ({songId, playlistId}) => {
+  return new Promise((resolve, reject) => {
+    Playlist.findOne({id:playlistId}).populate('songs').exec((err, res) => {
+      res.songs.pull({ _id: songId })
+      res.save();
+      err ? reject(err) : resolve(res);
+    })
   });
 };
 

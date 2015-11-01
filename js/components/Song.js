@@ -25,6 +25,7 @@ export default Relay.createContainer(Song, {
     song: () => Relay.QL`
 
       fragment on Song {
+        _id
         id
         title
         youtubeLink

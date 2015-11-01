@@ -152,6 +152,9 @@ let SongType = new GraphQLObjectType({
     id: {
       type: new GraphQLNonNull(GraphQLID)
     },
+    _id: {
+      type: new GraphQLNonNull(GraphQLID)
+    },
     title: {
       type: GraphQLString
     },
@@ -258,6 +261,25 @@ let UserUpdateAgeMutation = mutationWithClientMutationId({
   mutateAndGetPayload: User.updateAge
 });
 
+let DeleteSongFromPlaylistMutation = mutationWithClientMutationId({
+  name: 'DeleteSong',
+  inputFields:{
+    songId: {type: new GraphQLNonNull(GraphQLID) },
+    playlistId: {type: new GraphQLNonNull(GraphQLID) }
+  },
+  outputFields: {
+    playlist: {
+      type: PlaylistType,
+      resolve: (playlist) => {
+        return Playlist.getPlaylistById(playlist.id);
+      }
+    }
+  },
+  mutateAndGetPayload: ({songId, playlistId}) => {
+    return Playlist.deleteSong({songId, playlistId});
+  }
+});
+
 let AddSongToPlaylistMutation = mutationWithClientMutationId({
   name: 'AddSong',
   inputFields: {
@@ -304,7 +326,8 @@ let RootMutation = new GraphQLObjectType({
   fields: () => ({
     updateAge: UserUpdateAgeMutation,
     updateUser: UserUpdateMutation,
-    addSong: AddSongToPlaylistMutation
+    addSong: AddSongToPlaylistMutation,
+    deleteSong: DeleteSongFromPlaylistMutation
   })
 });
 
