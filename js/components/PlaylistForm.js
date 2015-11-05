@@ -28,7 +28,7 @@ class PlaylistForm extends React.Component {
 
     Relay.Store.update(new AddPlaylistMutation({
       title: this.state.playlistName,
-      creatorId: this.props.user.id
+      id: this.props.user.id
     }));
   }
   render() {

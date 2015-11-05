@@ -1,10 +1,10 @@
 import Relay from 'react-relay';
 import React from 'react';
 
-export default class AddSongMutation extends Relay.Mutation {
+export default class AddPlaylistMutation extends Relay.Mutation {
 	// static fragments = {
-	// 	playlist: () => Relay.QL`
-	// 	  fragment on Playlist {
+	// 	user: () => Relay.QL`
+	// 	  fragment on User {
 	// 	    id
 	// 	  }
 	// 	`
@@ -16,7 +16,7 @@ export default class AddSongMutation extends Relay.Mutation {
 
   	getVariables () {
 	    return {
-	      creatorId: this.props.creatorId,
+	      id: this.props.id,
 	      title: this.props.title
 	    }
 	}
@@ -24,21 +24,32 @@ export default class AddSongMutation extends Relay.Mutation {
 	getFatQuery () {
 	return Relay.QL`
 	  fragment on CreatePlaylistPayload {
-	    playlist {
-	    	title
-	    }
+	    playlistEdge,
+        user {
+          playlists
+        }
 	  }
 	`
 	}
 
-	// getConfigs () {
-	// 	return [{
-	// 	  type: 'FIELDS_CHANGE',
-	// 	  fieldIDs: {
-	// 	    playlist: this.props.id
-	// 	  }
-	// 	}];
-	// }
+	getConfigs () {
+		return [{
+	      type: 'FIELDS_CHANGE',
+	      fieldIDs: {
+	        user: this.props.id,
+	      },
+	    },
+	    {
+	      type: 'RANGE_ADD',
+	      parentName: 'user',
+	      parentID: this.props.id,
+	      connectionName: 'playlists',
+	      edgeName: 'playlistEdge',
+	      rangeBehaviors: {
+	        '': 'append',
+	      },
+	    }];	
+	}
 
 	// getOptimisticResponse() {
 	//     return {
