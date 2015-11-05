@@ -24,6 +24,15 @@ let Playlist = mongoose.model('Playlist', PlaylistSchema);
 
 exports.PlaylistSchema = Playlist;
 
+exports.createPlaylist = ({id, title}) => {
+  return new Promise((resolve, reject) => {
+    Playlist.create({_creatorId: id, title: title , type: "playlist"}, function (err, res) {
+      console.log('PLAYLIST CREATED res.id', res.id);
+      err ? reject(err) : resolve({creatorId: id, playlistId: res.id });
+    })
+  });
+};
+
 exports.getPlaylistById = (id) => {
   console.log('GET PLAYLIST BY ID CALLED', id);
   return new Promise((resolve, reject) => {

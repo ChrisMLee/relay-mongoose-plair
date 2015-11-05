@@ -261,6 +261,50 @@ let UserUpdateAgeMutation = mutationWithClientMutationId({
   mutateAndGetPayload: User.updateAge
 });
 
+let CreatePlaylistMutation = mutationWithClientMutationId({
+  name: 'CreatePlaylist',
+  inputFields:{
+    id: {type: new GraphQLNonNull(GraphQLID) },
+    title: {type: GraphQLString }
+  },
+  outputFields: {
+    playlistEdge: {
+      type: PlaylistTypeEdge,
+      resolve: ({creatorId, playlistId }) => {
+        let playlist;
+
+        return Playlist.getPlaylistById(playlistId).then((newPlaylist)=>{
+          playlist = newPlaylist;
+          return Playlist.getPlaylistsForUser(creatorId);
+        }).then((foundPlaylists)=>{
+          return{
+            cursor: cursorForObjectInConnection(foundPlaylists, playlist),
+            node: playlist
+          };
+        });
+      }
+    },
+    playlist: {
+      type: PlaylistType,
+      resolve: ({playlistId}) => {
+        return Playlist.getPlaylistById(playlistId);
+      }
+    },
+    user: {
+      type: UserType,
+      resolve: ({creatorId}) => {
+        User.getUserById({creatorId})
+      }
+    }
+  },
+  mutateAndGetPayload: ({id, title}) => {
+    return Playlist.createPlaylist({id, title}).then((result)=>{
+      let {creatorId, playlistId } = result;
+      return {creatorId, playlistId };
+    });
+  }
+});
+
 let DeleteSongFromPlaylistMutation = mutationWithClientMutationId({
   name: 'DeleteSong',
   inputFields:{
@@ -327,7 +371,8 @@ let RootMutation = new GraphQLObjectType({
     updateAge: UserUpdateAgeMutation,
     updateUser: UserUpdateMutation,
     addSong: AddSongToPlaylistMutation,
-    deleteSong: DeleteSongFromPlaylistMutation
+    deleteSong: DeleteSongFromPlaylistMutation,
+    addPlaylist: CreatePlaylistMutation
   })
 });
 
