@@ -26,10 +26,21 @@ class PlaylistForm extends React.Component {
   savePlaylist = () => {
     this.setState({editMode:false});
 
+   var onSuccess = (response) => {
+      console.log('Mutation successful!', response);
+    };
+
+    var onFailure = (transaction) => {
+      var error = transaction.getError() || new Error('Mutation failed.');
+      console.error(error);
+    };
+
+
     Relay.Store.update(new AddPlaylistMutation({
       title: this.state.playlistName,
       id: this.props.user.id
-    }));
+    }), {onSuccess, onFailure});
+
   }
   render() {
     let component;

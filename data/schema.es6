@@ -261,6 +261,10 @@ let UserUpdateAgeMutation = mutationWithClientMutationId({
   mutateAndGetPayload: User.updateAge
 });
 
+
+// Implements the temporary fix mentioned here
+// https://github.com/graphql/graphql-relay-js/issues/29
+
 let CreatePlaylistMutation = mutationWithClientMutationId({
   name: 'CreatePlaylist',
   inputFields:{
@@ -275,11 +279,21 @@ let CreatePlaylistMutation = mutationWithClientMutationId({
 
         return Playlist.getPlaylistById(playlistId).then((newPlaylist)=>{
           playlist = newPlaylist;
+
           return Playlist.getPlaylistsForUser(creatorId);
         }).then((foundPlaylists)=>{
+
+          let itemToPass;
+          for (const i of foundPlaylists) {
+            if (i.id === playlist.id) {
+              itemToPass = i;
+            }
+          }
+          console.log('GOT TO HERE 3', itemToPass);
+          
           return{
-            cursor: cursorForObjectInConnection(foundPlaylists, playlist),
-            node: playlist
+            cursor: cursorForObjectInConnection(foundPlaylists, itemToPass),
+            node: itemToPass
           };
         });
       }
@@ -293,7 +307,7 @@ let CreatePlaylistMutation = mutationWithClientMutationId({
     user: {
       type: UserType,
       resolve: ({creatorId}) => {
-        User.getUserById({creatorId})
+        User.getUserById(creatorId)
       }
     }
   },
