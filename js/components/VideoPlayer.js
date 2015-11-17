@@ -15,6 +15,10 @@ export default class VideoPlayer extends React.Component {
         autoplay: 1
       }
     };
+
+    // onEnd={func}
+
+    // get the next  video and start it
     
     console.log('the currentState', currentState);
     return (

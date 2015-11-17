@@ -6,8 +6,9 @@ import AppHomeRoute from '../routes/AppHomeRoute';
 
 import UserTwo from './UserTwo';
 import Header from './Header';
-import VideoPlayer from './VideoPlayer'
-import SongForm from './SongForm'
+import VideoPlayer from './VideoPlayer';
+import SongForm from './SongForm';
+import MainSection from './MainSection';
 
 import HeaderLoggedIn from './HeaderLoggedIn';
 import HeaderLoggedOut from './HeaderLoggedOut';
@@ -42,6 +43,7 @@ class HomeIn extends React.Component {
         <div style={mainStyle}>
           <UserTwo user={user} actions={actions}/>
           <VideoPlayer currentState={currentState} actions={actions}/>
+          <MainSection user={user} currentState={currentState} actions={actions} />
         </div>
       </div>
     );
@@ -64,6 +66,7 @@ export default Relay.createContainer(HomeIn, {
         ${UserTwo.getFragment('user')}
         ${HeaderLoggedIn.getFragment('user')}
         ${SongForm.getFragment('user')}
+        ${MainSection.getFragment('user')}
       }
     `
   }

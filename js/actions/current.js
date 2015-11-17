@@ -11,6 +11,13 @@ export function setLogin(userId) {
 }
 
 
+export function setPlaylist(playlistId) {
+  console.log('setPlaylist was actually called inside action creator', playlistId);
+  // Can filter through relay items for playlist
+  return { type: types.SET_PLAYLIST, playlistId };
+}
+
+
 export function logout() {
   return { type: types.LOGOUT };
 }
