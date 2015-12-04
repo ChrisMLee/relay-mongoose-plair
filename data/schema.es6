@@ -128,6 +128,17 @@ let UserType = new GraphQLObjectType({
     friends: {
       type: new GraphQLList(UserType)
     },
+    playlist:{
+      type: PlaylistType,
+      args:{
+        id: {
+          type: GraphQLID
+        }
+      },
+      resolve: (root, {id}) => {
+        return Playlist.getPlaylistById(id);
+      }
+    },
     playlists: {
       type: PlaylistConnection,
       args: connectionArgs,

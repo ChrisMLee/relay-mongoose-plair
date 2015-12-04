@@ -19,6 +19,7 @@ export default function current(state = initialState, action) {
       playing: true
     }
   case SET_PLAYLIST:
+    console.log('SET_PLAYLIST was called', action.playlistId);
     return{
       ...state,
       currentPlaylist: {id: action.playlistId}
