@@ -17,9 +17,9 @@ class MainSectionPlaylistSong extends React.Component {
     }));
   }
   render(){
-    let {song, actions} = this.props;
+    let {song, playlist, actions} = this.props;
     return (
-      <li style={styles.songStyle} onClick={() => {actions.setSong(song);} }>
+      <li style={styles.songStyle} onClick={() => {actions.setSong(song, playlist);} }>
         <h4>{song.title}</h4>
         <button onClick={this.deleteSong.bind(this)}>x</button>
       </li>

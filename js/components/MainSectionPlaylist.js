@@ -61,6 +61,9 @@ export default Relay.createContainer(MainSectionPlaylist, {
         id
         type
         songs{
+          id
+          title
+          youtubeLink
           ${MainSectionPlaylistSong.getFragment('song')}
         }
       }

@@ -6,6 +6,11 @@ export default class VideoPlayer extends React.Component {
     super(props)
     this._onReady = this._onReady.bind(this);
   }
+  _onEnd(e){
+    let {actions} = this.props;
+    actions.playNext();
+    console.log('onEnd', e.data);
+  }
   render() {
     const { currentState, actions } = this.props;
     const opts = {
@@ -25,7 +30,8 @@ export default class VideoPlayer extends React.Component {
       <YouTube
         url={currentState.currentSong.youtubeLink}
         opts={opts}
-        onReady={this._onReady}
+        onReady={this._onReady.bind(this)}
+        onEnd={this._onEnd.bind(this)}
       />
     );
   }
@@ -33,5 +39,20 @@ export default class VideoPlayer extends React.Component {
   _onReady(event) {
     // access to player in all event handlers via event.target
     this.props.currentState.playing ? event.target.playVideo() : event.target.pauseVideo();
+    console.log('onReady!!!!!!', event);
   }
 }
+
+// <YouTube
+//   url={string}            // required
+//   id={string}             // defaults -> random string
+//   className={string}      // defaults -> ""
+//   opts={obj}              // defaults -> {}
+//   onReady={func}          // defaults -> noop
+//   onPlay={func}           // defaults -> noop
+//   onPause={func}          // defaults -> noop
+//   onEnd={func}            // defaults -> noop
+//   onError={func}          // defaults -> noop
+//   onStateChange={func}    // defaults -> noop
+// />
+
