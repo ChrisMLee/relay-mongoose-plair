@@ -33,6 +33,18 @@ exports.createPlaylist = ({id, title}) => {
   });
 };
 
+exports.deletePlaylist = (id) => {
+  //Playlist.findOne({id:id})
+  console.log('deletePlaylist called, id:', id);
+  return new Promise((resolve, reject) => {
+    Playlist.findOne({id:id}).exec((error, res) => {
+      res.remove({}, function(err, removed){
+        err ? reject(err) : resolve(id);
+      });
+    });
+  });
+};
+
 exports.getPlaylistById = (id) => {
   console.log('GET PLAYLIST BY ID CALLED', id);
   return new Promise((resolve, reject) => {

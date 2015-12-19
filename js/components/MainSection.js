@@ -33,7 +33,7 @@ class MainSection extends React.Component {
 
 		return (
 		<div>
-			<p>{this.props.currentState.currentPlaylist.id}</p>
+			<p>id: {this.props.currentState.currentPlaylist.id}</p>
       {currentPlaylistComponent}
 		</div>
 		);

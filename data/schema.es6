@@ -316,6 +316,30 @@ let CreatePlaylistMutation = mutationWithClientMutationId({
   }
 });
 
+let DeletePlaylistMutation = mutationWithClientMutationId({
+  name: 'DeletePlaylist',
+  inputFields:{
+    playlistId: {type: new GraphQLNonNull(GraphQLID) }
+  },
+  outputFields: {
+    deletedPlaylistId: {
+      type: new GraphQLNonNull(GraphQLID),
+      resolve: (playlistId) => {
+        console.log('TRIED TO RESOLVE');
+        return playlistId;
+      }
+    }
+  },
+  mutateAndGetPayload: ({playlistId}) => {
+    return Playlist.deletePlaylist(playlistId);
+  }
+});
+
+/* Good to know: args need to have this structure {arg} because the input object comes in as
+  deletePlaylist called, id: { playlistId: '56490827a544e25156f4ca63',
+  clientMutationId: '124' }
+*/
+
 let DeleteSongFromPlaylistMutation = mutationWithClientMutationId({
   name: 'DeleteSong',
   inputFields:{
@@ -383,7 +407,8 @@ let RootMutation = new GraphQLObjectType({
     updateUser: UserUpdateMutation,
     addSong: AddSongToPlaylistMutation,
     deleteSong: DeleteSongFromPlaylistMutation,
-    addPlaylist: CreatePlaylistMutation
+    addPlaylist: CreatePlaylistMutation,
+    deletePlaylist: DeletePlaylistMutation
   })
 });
 
